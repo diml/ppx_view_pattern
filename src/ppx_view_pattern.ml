@@ -71,8 +71,8 @@ let rewrite ~loc exp cases =
         [ Nolabel, e
         ; Labelled "f",
           Exp.fun_ ~loc Nolabel None
-            (List.fold_right vars ~init:(Pat.construct ~loc { loc; txt = hnil } None)
-               ~f:(fun var acc ->
+            (List.fold_left vars ~init:(Pat.construct ~loc { loc; txt = hnil } None)
+               ~f:(fun acc var ->
                  let loc = var.ppat_loc in
                  Pat.construct ~loc { loc; txt = hcons }
                    (Some (Pat.tuple ~loc [var; acc]))))
