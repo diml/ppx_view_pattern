@@ -1,0 +1,4 @@
+(library
+ ((name        view_pattern)
+  (public_name ppx_view_pattern.lib)
+  (libraries (ocaml-migrate-parsetree))))
