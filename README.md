@@ -28,7 +28,7 @@ match%vpat <expr> with
 into some expression where constructors such as `A` or `B` are mapped
 to functions by simply lowercasing their name.
 
-You can see a full example in [test/test.ml]().
+You can see a full example in test/test.ml.
 
 ## Plan
 
