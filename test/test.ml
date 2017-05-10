@@ -1,3 +1,4 @@
+(** Abstracted OCaml AST *)
 module Ast : sig
   type arg_label
   type expression
