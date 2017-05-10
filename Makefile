@@ -1,5 +1,8 @@
 INSTALL_ARGS := $(if $(PREFIX),--prefix $(PREFIX),)
 
+default:
+	jbuilder runtest --dev
+
 all:
 	jbuilder build --dev
 
@@ -12,7 +15,7 @@ uninstall:
 reinstall: uninstall reinstall
 
 test:
-	jbuilder runtest
+	jbuilder runtest --dev
 
 clean:
 	rm -rf _build *.install

@@ -10,12 +10,9 @@ let rt_id s = Longident.Ldot (Lident "View_pattern", s)
 let rt_lid ~loc s = { Asttypes.loc; txt = rt_id s }
 let rt_eid ~loc s = Exp.ident ~loc (rt_lid ~loc s)
 
-let nil : Longident.t = Ldot (Ldot (Lident "View_pattern", "HList"), "[]")
-let cons : Longident.t = Ldot (Ldot (Lident "View_pattern", "HList"), "::")
-
 let map_cstr : Longident.t -> Longident.t = function
-  | Lident "[]" -> nil
-  | Lident "::" -> cons
+  | Lident "[]" -> rt_id "nil"
+  | Lident "::" -> rt_id "cons"
   | Lident s    -> Lident (String.lowercase s)
   | Ldot (p, s) -> Ldot (p, String.lowercase s)
   | Lapply _ -> assert false
@@ -62,6 +59,9 @@ let rec exprify pat =
   | Ppat_extension _ ->
     Location.raise_errorf ~loc "ppx_view_pattern: don't know how to handle this pattern"
 
+let hnil : Longident.t = Ldot (Ldot (Lident "View_pattern", "HList"), "[]")
+let hcons : Longident.t = Ldot (Ldot (Lident "View_pattern", "HList"), "::")
+
 let rewrite ~loc exp cases =
   let cases =
     List.map cases ~f:(fun c ->
@@ -71,10 +71,10 @@ let rewrite ~loc exp cases =
         [ Nolabel, e
         ; Labelled "f",
           Exp.fun_ ~loc Nolabel None
-            (List.fold_right vars ~init:(Pat.construct ~loc { loc; txt = nil } None)
+            (List.fold_right vars ~init:(Pat.construct ~loc { loc; txt = hnil } None)
                ~f:(fun var acc ->
                  let loc = var.ppat_loc in
-                 Pat.construct ~loc { loc; txt = cons }
+                 Pat.construct ~loc { loc; txt = hcons }
                    (Some (Pat.tuple ~loc [var; acc]))))
             c.pc_rhs
         ])
