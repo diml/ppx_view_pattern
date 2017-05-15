@@ -16,8 +16,8 @@ do this with combinators. However using them is really painful, and
 the code is a lot worse that what you can do by just pattern matching
 on the concrete data types.
 
-This ppx rewriter propose a simple solution to this problem. It
-rewrites patterm matching of the form:
+This ppx rewriter proposes a simple solution to this problem. It
+rewrites pattern matching of the form:
 
 ```ocaml
 match%vpat <expr> with
@@ -36,23 +36,23 @@ The plan is:
 
 - finish this rewriter, in particular add support for record patterns
 - update [ppx_ast][ppx_ast] to abstract the OCaml AST entirely and
-  provides all the necessary builders/patterns
+  provide all the necessary builders/patterns
 - upgrade all Jane Street ppx rewriters to use this
 
-This will be a breaking changes for users of [ppx_core][ppx_core] and
+This will be a breaking change for users of [ppx_core][ppx_core] and
 [ppx_driver][ppx_driver]. However, once users will have switched,
 they'll get much better stability guarantees since changes in the
 parsetree will simply be reflected by forward compatible changes of
 the [ppx_ast][ppx_ast] API.
 
-Under the hood, ppx_ast will use one the version of the Parsetree
+Under the hood, ppx_ast will use the version of the Parsetree
 supported by [ocaml-migrate-parsetree][omp]. It will always try to use
 the highest available version, so that the latest compiler features
 are available immediately.
 
 ## Status
 
-Currently nothing appart from this experiment as been done.
+Currently nothing appart from this experiment has been done.
 
 [ppx_core]: https://github.com/janestreet/ppx_core
 [ppx_ast]: https://github.com/janestreet/ppx_core
